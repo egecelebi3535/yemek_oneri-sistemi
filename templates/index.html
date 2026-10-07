@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Yemek Öneri Sistemi</title>
+
+</head>
+
+<body>
+
+    <h1>🍳 Yemek Öneri Sistemi</h1>
+
+    <p>Elindeki malzemeleri yaz:</p>
+
+    <form method="POST">
+
+        <input
+            type="text"
+            name="malzemeler"
+            placeholder="Örn: chicken, onion, tomato"
+            value="{{ girilen }}"
+        >
+
+        <button type="submit">
+            Yemek Bul
+        </button>
+
+    </form>
+
+
+    {% if sonuclar %}
+
+        <h2>🍽️ Önerilen Yemekler</h2>
+
+
+        {% for yemek, eslesenler in sonuclar %}
+
+            <hr>
+
+            <h2>
+                {{ yemek.isim }}
+            </h2>
+
+            <p>
+                <b>Kategori:</b>
+                {{ yemek.kategori }}
+            </p>
+
+            <p>
+                <b>Bölge:</b>
+                {{ yemek.bolge }}
+            </p>
+
+
+            <h3>✅ Eşleşen Malzemeler</h3>
+
+            <ul>
+
+                {% for malzeme in eslesenler %}
+
+                    <li>
+                        {{ malzeme }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+
+            <h3>🥕 Yemeğin Malzemeleri</h3>
+
+            <ul>
+
+                {% for malzeme in yemek.malzemeler %}
+
+                    <li>
+                        {{ malzeme }}
+                    </li>
+
+                {% endfor %}
+
+            </ul>
+
+
+            <h3>👨‍🍳 Tarif</h3>
+
+            <p>
+                {{ yemek.tarif }}
+            </p>
+
+
+            <h3>🖼️ Yemek Görseli</h3>
+
+            <img
+                src="{{ yemek.resim }}"
+                alt="{{ yemek.isim }}"
+                width="300"
+            >
+
+        {% endfor %}
+
+
+    {% elif girilen %}
+
+        <h2>
+            ❌ Eşleşen yemek bulunamadı.
+        </h2>
+
+    {% endif %}
+
+</body>
+
+</html>
